@@ -16,7 +16,7 @@ const theme = createTheme({
 function App() {
   const socket = useMemo(
     () =>
-      io("http://localhost:5000", {
+      io("https://chatingmaster.onrender.com", {
         withCredentials: true,
       }), []);
 
