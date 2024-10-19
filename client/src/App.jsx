@@ -16,7 +16,7 @@ const theme = createTheme({
 function App() {
   const socket = useMemo(
     () =>
-      io("https://chatingmaster.onrender.com", {
+      io("http://localhost:5000", {
         withCredentials: true,
       }), []);
 
@@ -127,7 +127,7 @@ function App() {
           </Stack>
         </Box>
 
-        <Stack>
+        <Stack spacing={1}>
           {messages.map((m, i) => (
             <Typography key={i} variant="h6" component="div" gutterBottom>
               {m}
