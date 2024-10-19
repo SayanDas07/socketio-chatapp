@@ -14,7 +14,7 @@ const port = process.env.PORT;
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "https://chatingmaster-oog5.onrender.com/",
+        origin: "https://chatingmaster-oog5.onrender.com",
         methods: ["GET", "POST"],
         credentials: true,
     },
@@ -22,7 +22,7 @@ const io = new Server(server, {
 
 app.use(
     cors({
-        origin: "https://chatingmaster-oog5.onrender.com/",
+        origin: "https://chatingmaster-oog5.onrender.com",
         methods: ["GET", "POST"],
         credentials: true,
     })
