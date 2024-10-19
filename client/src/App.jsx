@@ -1,15 +1,24 @@
-import { Box, Button, Container, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, createTheme, Stack, TextField, ThemeProvider, Typography } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 
-function App() {
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#3f51b5',
+    },
+    secondary: {
+      main: '#f50057',
+    },
+  },
+});
 
+function App() {
   const socket = useMemo(
     () =>
       io("http://localhost:5000", {
         withCredentials: true,
       }), []);
-
 
   const [message, setMessage] = useState("");
   const [room, setRoom] = useState("");
@@ -18,7 +27,6 @@ function App() {
   const [roomName, setRoomName] = useState("");
 
   console.log(messages);
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,72 +58,85 @@ function App() {
     socket.on("recived-message", (e) => {
       console.log(e);
       setMessages((prev) => [...prev, e]);
-    })
+    });
 
     return () => {
       socket.disconnect();
     };
-
   }, [socket]);
 
   return (
-   
-    <Container maxWidth="sm">
+    <ThemeProvider theme={theme}>
+      <Container maxWidth="sm" sx={{ mt: 4, mb: 4, backgroundColor: "#7cc6e6", borderRadius: 2, p: 3 }}>
+        <Box sx={{ height: 200 }} />
+        <Typography variant="h4" component="div" align="center" gutterBottom sx={{ fontWeight: 'bold' }}>
+          Chat App
+        </Typography>
+        <Typography variant="h6" component="div" gutterBottom>
+          {socketID ? `Socket ID: ${socketID}` : "CONNECTING...."}
+        </Typography>
 
-      <Box sx={{ height: 200 }} />
-      <Typography variant="h5" component="div" gutterBottom>
-        Chat App
-      </Typography>
-      <Typography variant="h6" component="div" gutterBottom>
-        {socketID ? `Socket ID: ${socketID}` : "CONNECTING...."}
-      </Typography>
+        <Box component="form" onSubmit={joinRoomHandler} sx={{ mb: 3, mt: 3 }}>
+          <Box display="flex" alignItems="center" spacing={2}>
+            <TextField
+              fullWidth
+              value={roomName}
+              onChange={(e) => setRoomName(e.target.value)}
+              label="Room Name"
+              variant="outlined"
+              size="small"
+              sx={{ mr: 1 }}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              Join
+            </Button>
+          </Box>
+        </Box>
 
-      <form onSubmit={joinRoomHandler}>
-        <h5>Join Room</h5>
-        <TextField
-          value={roomName}
-          onChange={(e) => setRoomName(e.target.value)}
-          id="outlined-basic"
-          label="Room Name"
-          variant="outlined"
-        />
-        <Button type="submit" variant="contained" color="primary">
-          Join
-        </Button>
-      </form>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mb: 3 }}>
+          <Stack spacing={2}>
+            <TextField
+              fullWidth
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              label="Message"
+              variant="outlined"
+              size="small"
+            />
+            <TextField
+              fullWidth
+              value={room}
+              onChange={(e) => setRoom(e.target.value)}
+              label="Room"
+              variant="outlined"
+              size="small"
+            />
+            <Button
+              fullWidth
+              type="submit"
+              variant="contained"
+              color="secondary"
+              disabled={!message || !room}
+            >
+              Send
+            </Button>
+          </Stack>
+        </Box>
 
-
-
-      <form onSubmit={handleSubmit}>
-        <TextField value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          id="outlined-basic"
-          label="message"
-          variant="outlined" />
-
-        <TextField value={room}
-          onChange={(e) => setRoom(e.target.value)}
-          id="outlined-basic"
-          label="room"
-          variant="outlined" />
-
-        <Button type="submit" variant="contained" color="primary">
-          Send
-        </Button>
-      </form>
-
-
-      <Stack>
-        {messages.map((m, i) => (
-          <Typography key={i} variant="h6" component="div" gutterBottom>
-            {m}
-          </Typography>
-        ))}
-      </Stack>
-
-    </Container>
+        <Stack>
+          {messages.map((m, i) => (
+            <Typography key={i} variant="h6" component="div" gutterBottom>
+              {m}
+            </Typography>
+          ))}
+        </Stack>
+      </Container>
+    </ThemeProvider>
   );
 }
 
-export default App
-
+export default App;
