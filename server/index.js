@@ -10,9 +10,9 @@ dotenv.config({
 
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 const server = createServer(app);
-io = new Server(server, {
+const io = new Server(server, {
     cors: {
         origin: "https://chatingmaster-oog5.onrender.com/",
         methods: ["GET", "POST"],
@@ -22,12 +22,11 @@ io = new Server(server, {
 
 app.use(
     cors({
-        origin: "https://chatingmaster-oog5.onrender.com/", 
+        origin: "https://chatingmaster-oog5.onrender.com/",
         methods: ["GET", "POST"],
         credentials: true,
     })
 );
-
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
