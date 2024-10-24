@@ -29,22 +29,22 @@ https://chatingmaster-oog5.onrender.com/
 
 1. Clone the repository:
 
-   git clone https://github.com/SayanDas07/socketio-chatapp.git
-   cd chat-app
+   1. git clone https://github.com/SayanDas07/socketio-chatapp.git
+   2. cd chat-app
 
 2. Install dependencies for both the frontend and backend:
-    cd client
-    npm install
+    1. cd client
+    2. npm install
 
-    cd ../server
-    npm install
+    1. cd ../server
+    2. npm install
 
 3. Start the backend server:
-    cd server
-    npm run dev
+    1. cd server
+    2. npm run dev
 
 4. Start the backend server:
-    cd client
-    npm run dev
+    1. cd client
+    2. npm run dev
 
 5. Open your browser and go to http://localhost:5173 (or the port specified by Vite).
