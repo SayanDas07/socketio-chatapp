@@ -1,4 +1,4 @@
-# Chat Application with SocketIo
+# Chat Application with SocketIo and MERN
 
 A simple chat application that allows users to join rooms and send messages in real-time. Built using React, Socket.IO, and Material-UI for the frontend and Node.js for the backend.
 
